@@ -1,4 +1,4 @@
-package no.kristiania.pgr200.database;
+package no.kristiania.pgr200.database.database;
 
 import no.kristiania.pgr200.database.database.ConferenceDatabaseProgram;
 import no.kristiania.pgr200.database.database.ConferenceTalk;

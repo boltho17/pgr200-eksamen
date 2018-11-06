@@ -1,4 +1,4 @@
-package no.kristiania.pgr200.database;
+package no.kristiania.pgr200.database.http;
 
 import java.util.ArrayList;
 import java.util.Arrays;

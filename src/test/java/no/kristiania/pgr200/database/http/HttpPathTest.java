@@ -1,5 +1,6 @@
-package no.kristiania.pgr200.database;
+package no.kristiania.pgr200.database.http;
 
+import no.kristiania.pgr200.database.http.HttpPath;
 import org.junit.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;

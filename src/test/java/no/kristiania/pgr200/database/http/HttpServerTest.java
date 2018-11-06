@@ -1,5 +1,8 @@
-package no.kristiania.pgr200.database;
+package no.kristiania.pgr200.database.http;
 
+import no.kristiania.pgr200.database.http.HttpRequest;
+import no.kristiania.pgr200.database.http.HttpResponse;
+import no.kristiania.pgr200.database.http.HttpServer;
 import org.junit.BeforeClass;
 import org.junit.Test;
 

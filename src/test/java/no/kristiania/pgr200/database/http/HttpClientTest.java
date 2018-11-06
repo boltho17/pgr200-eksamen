@@ -1,5 +1,7 @@
-package no.kristiania.pgr200.database;
+package no.kristiania.pgr200.database.http;
 
+import no.kristiania.pgr200.database.http.HttpRequest;
+import no.kristiania.pgr200.database.http.HttpResponse;
 import org.junit.Test;
 
 import java.io.IOException;
