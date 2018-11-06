@@ -27,7 +27,7 @@ public class ConferenceDatabaseProgram {
         //Fikk ikke til å bruke Properties og lese fra fil:
         Properties prop = new Properties();
         try {
-            FileReader reader = new FileReader("resources/config.properties");
+            FileReader reader = new FileReader("config.properties");
             prop.load(reader);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -36,15 +36,15 @@ public class ConferenceDatabaseProgram {
         }
 
         PGPoolingDataSource dataSource = new PGPoolingDataSource();
-        /*
+
         dataSource.setUrl(prop.getProperty("database"));
         dataSource.setUser(prop.getProperty("dbuser"));
         dataSource.setPassword(prop.getProperty("dbpassword"));
-        */
+        /*
         dataSource.setUrl("jdbc:postgresql://localhost/postgres");
         dataSource.setUser("postgres");
         dataSource.setPassword("root");
-
+        */
 
 
         Flyway flyway = new Flyway();
