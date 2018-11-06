@@ -5,14 +5,14 @@ import java.io.InputStream;
 import java.net.Socket;
 import java.util.HashMap;
 
-public class HttpRes {
+public class HttpResponse {
 
   StringBuilder currentLine;
   HashMap<String, String> headers;
   String[] parts;
   String body;
 
-  public HttpRes(Socket socket){
+  public HttpResponse(Socket socket){
       InputStream input;
     headers = new HashMap<>();
 

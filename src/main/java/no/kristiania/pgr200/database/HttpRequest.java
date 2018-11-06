@@ -4,22 +4,22 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.net.Socket;
 
-public class HttpReq {
+public class HttpRequest {
   private String host;
   private int port;
   private String uri;
   private OutputStream output;
 
-  public HttpReq(String host, int port, String uri) {
+  public HttpRequest(String host, int port, String uri) {
     this.host = host;
     this.port = port;
     this.uri = uri;
   }
 
-  public HttpRes execute() throws IOException {
+  public HttpResponse execute() throws IOException {
     try(Socket socket = new Socket(host, port)){
       writeOutput(socket);
-      return new HttpRes(socket);
+      return new HttpResponse(socket);
     }
   }
 
