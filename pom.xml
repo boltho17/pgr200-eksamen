@@ -66,11 +66,18 @@
             <version>1.1</version>
         </dependency>
 
-        <dependency>
+        <!--<dependency>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-jar-plugin</artifactId>
             <version>3.1.0</version>
             <type>maven-plugin</type>
+        </dependency>
+        -->
+
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>19.0</version>
         </dependency>
 
     </dependencies>
@@ -108,13 +115,15 @@
                 <version>3.2.0</version>
                 <executions>
                     <execution>
+                        <phase>package</phase>
                         <goals>
                             <goal>shade</goal>
                         </goals>
                         <configuration>
                             <transformers>
-                                <transformer implementation="org.apache.maven.plugins.shade.resource.ComponentsXmlResourceTransformer"/>
-                                <mainClass>no.kristiania.pgr200.database.ConferenceDatabaseProgram</mainClass>
+                                <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                                    <mainClass>no.kristiania.pgr200.database.database.ConferenceDatabaseProgram</mainClass>
+                                </transformer>
                             </transformers>
                         </configuration>
                     </execution>
