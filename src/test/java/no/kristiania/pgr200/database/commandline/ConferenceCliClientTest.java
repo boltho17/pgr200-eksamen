@@ -2,6 +2,8 @@ package no.kristiania.pgr200.database.commandline;
 
 import org.junit.Test;
 
+import java.io.IOException;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 
@@ -10,7 +12,7 @@ public class ConferenceCliClientTest {
     private ConferenceCommandLineClient client = new ConferenceCommandLineClient();
 
     @Test
-    public void shouldDecodeAddCommand() {
+    public void shouldDecodeAddCommand() throws IOException {
         String title = SampleData.sampleText(5);
         String description = SampleData.sampleText(10);
         ConferenceClientCommand command = client.decodeCommand(new String[] {
@@ -26,7 +28,7 @@ public class ConferenceCliClientTest {
     }
 
     @Test
-    public void shouldDecodeAddCommandWithTopic() {
+    public void shouldDecodeAddCommandWithTopic() throws IOException {
         String title = SampleData.sampleText(5);
         String description = SampleData.sampleText(10);
         String topic = SampleData.sampleTopic();
@@ -45,7 +47,7 @@ public class ConferenceCliClientTest {
     }
 
     @Test
-    public void shouldDecodeListCommandWithTopic() {
+    public void shouldDecodeListCommandWithTopic() throws IOException {
         String title = SampleData.sampleText(5);
         String description = SampleData.sampleText(10);
         String topic = SampleData.sampleTopic();
