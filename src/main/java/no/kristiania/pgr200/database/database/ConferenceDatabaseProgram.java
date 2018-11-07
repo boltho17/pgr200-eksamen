@@ -24,7 +24,6 @@ public class ConferenceDatabaseProgram {
 
     public DataSource createDataSource() {
 
-        //Fikk ikke til å bruke Properties og lese fra fil:
         Properties prop = new Properties();
         try {
             FileReader reader = new FileReader("config.properties");
@@ -47,10 +46,12 @@ public class ConferenceDatabaseProgram {
         */
 
 
-        Flyway flyway = new Flyway();
+        /*Flyway flyway = new Flyway();
         flyway.setDataSource(dataSource);
         //flyway.clean();
         //flyway.baseline();
+        flyway.migrate();*/
+        Flyway flyway = Flyway.configure().dataSource(dataSource).load();
         flyway.migrate();
 
         return dataSource;
@@ -94,5 +95,4 @@ public class ConferenceDatabaseProgram {
         dao.insertTalk(talk);
         dao.listAll();
     }
-
 }
