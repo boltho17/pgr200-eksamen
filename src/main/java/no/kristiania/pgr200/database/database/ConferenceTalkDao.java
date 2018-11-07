@@ -56,4 +56,27 @@ public class ConferenceTalkDao {
         }
     }
 
+    public void deleteTalk(String title) throws SQLException {
+        try(Connection conn = dataSource.getConnection()) {
+            String sql = "delete from CONFERENCE_TALK where title = ?";
+            try (PreparedStatement statement = conn.prepareStatement(sql)) {
+                statement.setString(1, title);
+
+
+                statement.executeUpdate();
+            }
+        }
+
+    }
+
+    public void deleteAll() throws SQLException {
+        try(Connection conn = dataSource.getConnection()) {
+            String sql = "truncate CONFERENCE_TALK restart identity";
+            try (PreparedStatement statement = conn.prepareStatement(sql)) {
+
+                statement.executeUpdate();
+                //conn.commit();
+            }
+        }
+    }
 }

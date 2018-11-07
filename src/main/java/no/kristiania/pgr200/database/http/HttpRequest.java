@@ -1,14 +1,18 @@
 package no.kristiania.pgr200.database.http;
 
+
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.Socket;
 
 public class HttpRequest {
-  private String host;
-  private int port;
-  private String uri;
-  private OutputStream output;
+  protected String host;
+  protected int port;
+  protected String uri;
+  protected OutputStream output;
+
+
+  public HttpRequest() {}
 
   public HttpRequest(String host, int port, String uri) {
     this.host = host;
@@ -28,18 +32,18 @@ public class HttpRequest {
   }
 
   public void writeOutput(Socket socket) throws IOException {
-
+/*
     output = socket.getOutputStream();
-    output.write(("GET " + getUri() + " HTTP/1.1\r\n").getBytes());
+    output.write(("GETT " + getUri() + " HTTP/1.1\r\n").getBytes());
     output.write(("Host: " + getHost() + "\r\n").getBytes());
     output.write("Connection: close\r\n".getBytes());
-    output.write("User-Agent: Hackerman101\r\n".getBytes());
+    output.write("User-Agent: Hackerman\r\n".getBytes());
     output.write("\r\n".getBytes());
 
-    //output.flush();
+    //output.flush();*/
   }
 
-  private String getHost() {
+  public String getHost() {
     return host;
   }
 

@@ -52,9 +52,9 @@ public class ConferenceCommandLineClient {
      */
     private DeleteTalkCommand createDeleteCommand(String[] strings) {
 
-        String id = getArgument("-id", strings, null);
+        String title = getArgument("-title", strings, "unknown");
 
-        return new DeleteTalkCommand(id);
+        return new DeleteTalkCommand(title);
     }
 
 
@@ -66,7 +66,7 @@ public class ConferenceCommandLineClient {
      * @param strings
      * @return
      */
-    private ListTalksCommand createListCommand(String[] strings) {
+    public ListTalksCommand createListCommand(String[] strings) {
         // input like: -id 42 -field name -new Something_Awesome -> name of talk 42 changed to "Something_Awesome"
         String id = getArgument("-id", strings, null);
         String title = getArgument("-title", strings, "unknown");

@@ -13,7 +13,7 @@ public class HttpResponse {
   String body;
 
   public HttpResponse(Socket socket){
-      InputStream input;
+    InputStream input;
     headers = new HashMap<>();
 
     try {

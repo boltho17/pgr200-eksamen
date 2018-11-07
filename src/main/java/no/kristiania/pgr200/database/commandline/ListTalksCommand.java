@@ -42,4 +42,9 @@ public class ListTalksCommand implements ConferenceClientCommand {
         setTopic(getArgument(args, "-topic"));
     }
 
+    @Override
+    public String toString() {
+        return "list";
+    }
+
 }

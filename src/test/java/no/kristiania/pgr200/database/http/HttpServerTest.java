@@ -48,7 +48,7 @@ public class HttpServerTest {
 
   @Test
   public void shouldEchoResponseBody() throws IOException {
-    HttpRequest request = new HttpRequest("localhost", server.getPort(),
+    HttpRequest request = new HttpListRequest("localhost", server.getPort(),
             "/echo?body=Hello+Kristiania!");
     HttpResponse response = request.execute();
 
