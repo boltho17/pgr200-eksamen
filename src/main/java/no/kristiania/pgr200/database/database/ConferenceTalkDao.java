@@ -18,64 +18,101 @@ public class ConferenceTalkDao {
 
 
     public void insertTalk(ConferenceTalk talk) throws SQLException {
-        try(Connection conn = dataSource.getConnection()) {
-            String sql = "insert into CONFERENCE_TALK (TITLE, DESCRIPTION) values (?, ?)";
-            try (PreparedStatement statement = conn.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS)) {
-                statement.setString(1, talk.getTitle());
-                statement.setString(2, talk.getDescription());
+        try (Connection conn = dataSource.getConnection()) {
+            try (PreparedStatement ps = conn.prepareStatement("select count(*) from CONFERENCE_TALK where title = ?")) {
+                ps.setString(1, talk.getTitle());
 
-                statement.executeUpdate();
+                ResultSet rs = ps.executeQuery();
+                int n;
+                if (rs.next()) {
+                    n = rs.getInt(1);
+
+                    if (n < 1) {
+                        String sql = "insert into CONFERENCE_TALK (TITLE, DESCRIPTION) values (?, ?)";
+                        try (PreparedStatement statement = conn.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS)) {
+                            statement.setString(1, talk.getTitle());
+                            statement.setString(2, talk.getDescription());
+
+                            statement.executeUpdate();
+                            System.out.println("Success! The talk " + talk.getTitle() + " has been added.");
+                        }
+                    } else {
+                        System.out.println("Failure! The talk " + talk.getTitle() + " already exists.");
+                    }
+                }
             }
         }
     }
 
     public List<ConferenceTalk> listAll() throws SQLException {
+        List<ConferenceTalk> talks = new ArrayList<>();
+        try (Connection conn = dataSource.getConnection()) {
+            try (PreparedStatement ps = conn.prepareStatement("select count(*) from CONFERENCE_TALK")) {
 
-        try (Connection myConn = dataSource.getConnection()) {
-            String sql = "select * from conference_talk";
+                ResultSet rs = ps.executeQuery();
+                int n;
+                if (rs.next()) {
+                    n = rs.getInt(1);
 
-            try (PreparedStatement statement = myConn.prepareStatement(sql)) {
-                try (ResultSet rs = statement.executeQuery()) {
-                    List<ConferenceTalk> talks = new ArrayList<>();
-                    while (rs.next()) {
-                        ConferenceTalk talk = new ConferenceTalk();
-                        talk.setId(rs.getInt("id"));
-                        talk.setTitle(rs.getString("title"));
-                        talk.setDescription(rs.getString("description"));
-                        talks.add(talk);
-                        System.out.println(talk.getId() + "." +
-                                "\n" + "Title: " + talk.getTitle() +
-                                "\n" + "Descrption: " + talk.getDescription());
-                        System.out.println();
+                    if (n > 0) {
+                        String sql = "select * from conference_talk";
+                        try (PreparedStatement statement = conn.prepareStatement(sql)) {
+                            try (ResultSet rs2 = statement.executeQuery()) {
+                                while (rs2.next()) {
+                                    ConferenceTalk talk = new ConferenceTalk();
+                                    talk.setId(rs2.getInt("id"));
+                                    talk.setTitle(rs2.getString("title"));
+                                    talk.setDescription(rs2.getString("description"));
+                                    talks.add(talk);
+                                    System.out.println(talk.getId() + "." +
+                                            "\n" + "Title: " + talk.getTitle() +
+                                            "\n" + "Descrption: " + talk.getDescription());
+                                    System.out.println();
+                                }
+                                System.out.println("All talks listed");
+                            }
+                        }
+                    } else {
+                        System.out.println("No talks currently registered in the database.");
                     }
-                    return talks;
                 }
-
             }
-
         }
+        return talks;
     }
 
     public void deleteTalk(String title) throws SQLException {
-        try(Connection conn = dataSource.getConnection()) {
-            String sql = "delete from CONFERENCE_TALK where title = ?";
-            try (PreparedStatement statement = conn.prepareStatement(sql)) {
-                statement.setString(1, title);
+        try (Connection conn = dataSource.getConnection()) {
+            try (PreparedStatement ps = conn.prepareStatement("select count(*) from CONFERENCE_TALK where title = ?")) {
+                ps.setString(1, title);
 
+                ResultSet rs = ps.executeQuery();
+                int n;
+                if (rs.next()) {
+                    n = rs.getInt(1);
+                    System.out.println(n);
 
-                statement.executeUpdate();
+                    if (n > 0) {
+                        String sql = "delete from CONFERENCE_TALK where title = ?";
+                        try (PreparedStatement statement = conn.prepareStatement(sql)) {
+                            statement.setString(1, title);
+
+                            statement.executeUpdate();
+                            System.out.println("Job done! The talk " + title + " has been deleted.");
+                        }
+                    } else System.out.println("No talk with the title " + title + " exists.");
+                }
             }
         }
-
     }
 
     public void deleteAll() throws SQLException {
-        try(Connection conn = dataSource.getConnection()) {
+        try (Connection conn = dataSource.getConnection()) {
             String sql = "truncate CONFERENCE_TALK restart identity";
             try (PreparedStatement statement = conn.prepareStatement(sql)) {
 
                 statement.executeUpdate();
-                //conn.commit();
+                System.out.println("All talks deleted, identifier reset.");
             }
         }
     }

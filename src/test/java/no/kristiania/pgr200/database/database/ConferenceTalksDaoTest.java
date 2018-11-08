@@ -33,6 +33,7 @@ public class ConferenceTalksDaoTest {
                 .contains("Greetings Mr. Bond");
     }
 
+    //Denne testen kjører alltid grønn. MÅ FIKSES!
     @Test
     public void shouldDeleteTalkWithTitle() throws SQLException {
         ConferenceDatabaseProgram cdp = new ConferenceDatabaseProgram();
