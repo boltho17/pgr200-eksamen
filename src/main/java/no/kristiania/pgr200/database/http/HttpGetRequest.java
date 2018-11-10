@@ -3,16 +3,16 @@ package no.kristiania.pgr200.database.http;
 import java.io.IOException;
 import java.net.Socket;
 
-public class HttpAddRequest extends HttpRequest {
+public class HttpGetRequest extends HttpRequest {
 
-    public HttpAddRequest(String host, int port, String uri) {
+    public HttpGetRequest(String host, int port, String uri) {
         super(host, port, uri);
     }
 
 
     public void writeOutput(Socket socket) throws IOException {
         output = socket.getOutputStream();
-        output.write(("POST " + getUri() + " HTTP/1.1\r\n").getBytes());
+        output.write(("GET " + getUri() + " HTTP/1.1\r\n").getBytes());
         output.write(("Host: " + getHost() + "\r\n").getBytes());
         output.write("Connection: close\r\n".getBytes());
         output.write("User-Agent: Hackerman\r\n".getBytes());

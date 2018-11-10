@@ -1,8 +1,5 @@
 package no.kristiania.pgr200.database.http;
 
-import no.kristiania.pgr200.database.http.HttpRequest;
-import no.kristiania.pgr200.database.http.HttpResponse;
-import no.kristiania.pgr200.database.http.HttpServer;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -22,7 +19,7 @@ public class HttpServerTest {
 
   @Test
   public void shouldHandleRequest() throws IOException {
-    HttpRequest request = new HttpRequest("localhost", server.getPort(), "/echo?status=200");
+    HttpRequest request = new HttpGetRequest("localhost", server.getPort(), "/echo?status=200");
     HttpResponse response = request.execute();
 
     assertThat(response.getStatusCode()).isEqualTo(200);
@@ -30,7 +27,7 @@ public class HttpServerTest {
 
   @Test
   public void shouldEchoStatusCode() throws IOException {
-    HttpRequest request = new HttpRequest("localhost", server.getPort(), "/echo?status=404");
+    HttpRequest request = new HttpGetRequest("localhost", server.getPort(), "/echo?status=404");
     HttpResponse response = request.execute();
 
     assertThat(response.getStatusCode()).isEqualTo(404);
@@ -38,7 +35,7 @@ public class HttpServerTest {
 
   @Test
   public void shouldEchoResponseHeaders() throws IOException {
-    HttpRequest request = new HttpRequest("localhost", server.getPort(),
+    HttpRequest request = new HttpGetRequest("localhost", server.getPort(),
             "/echo?status=307&Location=http%3A%2F%2Fwww.kristiania.no");
     HttpResponse response = request.execute();
 
@@ -48,7 +45,7 @@ public class HttpServerTest {
 
   @Test
   public void shouldEchoResponseBody() throws IOException {
-    HttpRequest request = new HttpListRequest("localhost", server.getPort(),
+    HttpRequest request = new HttpGetRequest("localhost", server.getPort(),
             "/echo?body=Hello+Kristiania!");
     HttpResponse response = request.execute();
 

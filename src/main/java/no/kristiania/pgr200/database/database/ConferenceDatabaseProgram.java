@@ -8,7 +8,6 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.sql.SQLException;
-import java.sql.SQLOutput;
 import java.util.Properties;
 
 public class ConferenceDatabaseProgram {
@@ -25,7 +24,6 @@ public class ConferenceDatabaseProgram {
 
     public DataSource createDataSource() {
 
-        //Fikk ikke til å bruke Properties og lese fra fil:
         Properties prop = new Properties();
 
         try {
@@ -42,13 +40,6 @@ public class ConferenceDatabaseProgram {
         dataSource.setUrl(prop.getProperty("database"));
         dataSource.setUser(prop.getProperty("dbuser"));
         dataSource.setPassword(prop.getProperty("dbpassword"));
-
-
-        /*dataSource.setUrl("jdbc:postgresql://localhost/postgres");
-        dataSource.setUser("postgres");
-        dataSource.setPassword("root");*/
-
-
 
 
         /*Flyway flyway = new Flyway();
@@ -69,40 +60,34 @@ public class ConferenceDatabaseProgram {
 
     private void run(String[] args) throws SQLException {
         String command = "";
-        if(args.length > 0) {
-        command = args[0];
+        if (args.length > 0) {
+            command = args[0];
         }
 
-        if(command.toLowerCase().equals("insert")) {
-            if(args.length >= 3) {
+        if (command.toLowerCase().equals("insert")) {
+            if (args.length >= 3) {
                 String title = args[1];
                 args[1] = title.substring(0, 1).toUpperCase() + title.substring(1);
                 talk = new ConferenceTalk(args[1], args[2]);
                 dao.insertTalk(talk);
-            }
-            else {
+            } else {
                 System.out.println("Title and description required!");
             }
-        }
-
-        else if (command.toLowerCase().equals("list") && args.length > 0) {
+        } else if (command.toLowerCase().equals("list") && args.length > 0) {
             dao.listAll();
             //System.out.println("All talks listed!!");
-        }
-
-        else if (command.toLowerCase().equals("delete")) {
-            if(args.length >= 2) {
+        } else if (command.toLowerCase().equals("delete")) {
+            if (args.length >= 2) {
                 String title = args[1];
                 args[1] = title.substring(0, 1).toUpperCase() + title.substring(1);
                 //for(int i = 0; i < dao.listAll().size(); i++) {
-                    //System.out.println(dao.listAll().get(i));
-                    //if(dao.listAll().get(i).equals(title)) {
-                        dao.deleteTalk(args[1]);
+                //System.out.println(dao.listAll().get(i));
+                //if(dao.listAll().get(i).equals(title)) {
+                dao.deleteTalk(args[1]);
+            } else {
+                System.out.println("Please specify which Talk you want to delete.");
             }
-            else { System.out.println("Please specify which Talk you want to delete."); }
-        }
-
-        else {
+        } else {
             System.out.println("Please type command: \"Insert\", \"Delete\" or \"List\"");
             System.exit(1);
         }
