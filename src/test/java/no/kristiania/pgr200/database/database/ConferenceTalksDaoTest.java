@@ -1,8 +1,5 @@
 package no.kristiania.pgr200.database.database;
 
-import no.kristiania.pgr200.database.database.ConferenceDatabaseProgram;
-import no.kristiania.pgr200.database.database.ConferenceTalk;
-import no.kristiania.pgr200.database.database.ConferenceTalkDao;
 import org.junit.Test;
 
 import java.sql.SQLException;

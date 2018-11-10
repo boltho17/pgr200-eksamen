@@ -5,8 +5,8 @@ import java.net.Socket;
 
 public class HttpPostRequest extends HttpRequest {
 
-    public HttpPostRequest(String host, int port, String uri) {
-        super(host, port, uri);
+    public HttpPostRequest(String host, int port, String url) {
+        super(host, port, url);
     }
 
 

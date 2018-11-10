@@ -16,7 +16,7 @@ public class ConferenceTalkDao {
         this.dataSource = dataSource;
     }
 
-
+    //Legger til ny talk hvis ikke en talk med samme tittel allerede eksisterer.
     public void insertTalk(ConferenceTalk talk) throws SQLException {
         try (Connection conn = dataSource.getConnection()) {
             try (PreparedStatement ps = conn.prepareStatement("select count(*) from CONFERENCE_TALK where title = ?")) {
@@ -44,6 +44,7 @@ public class ConferenceTalkDao {
         }
     }
 
+    //Lister opp alle talks. Gir beskjed hvis det ikke finnes noen talks å liste.
     public List<ConferenceTalk> listAll() throws SQLException {
         List<ConferenceTalk> talks = new ArrayList<>();
         try (Connection conn = dataSource.getConnection()) {
@@ -81,6 +82,7 @@ public class ConferenceTalkDao {
         return talks;
     }
 
+    //Sletter en talk basert på tittel. Gir beskjed hvis en talk med den gitte tittelen ikke eksisterer.
     public void deleteTalk(String title) throws SQLException {
         try (Connection conn = dataSource.getConnection()) {
             try (PreparedStatement ps = conn.prepareStatement("select count(*) from CONFERENCE_TALK where title = ?")) {
@@ -106,6 +108,7 @@ public class ConferenceTalkDao {
         }
     }
 
+    //Sletter alle data i tabellen conference talks og resetter det unike løpenummeret.
     public void deleteAll() throws SQLException {
         try (Connection conn = dataSource.getConnection()) {
             String sql = "truncate CONFERENCE_TALK restart identity";

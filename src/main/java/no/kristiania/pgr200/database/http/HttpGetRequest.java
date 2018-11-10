@@ -5,8 +5,8 @@ import java.net.Socket;
 
 public class HttpGetRequest extends HttpRequest {
 
-    public HttpGetRequest(String host, int port, String uri) {
-        super(host, port, uri);
+    public HttpGetRequest(String host, int port, String url) {
+        super(host, port, url);
     }
 
 

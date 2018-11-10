@@ -7,35 +7,37 @@ import java.util.Map;
 
 public class HttpPath {
 
-    String path;
+    String uri;
     Map<String, String> statusMessages = new HashMap<>();
 
-    public HttpPath(String path) {
-        this.path = path;
+    //public HttpPath() {}
+
+    public HttpPath(String uri) {
+        this.uri = uri;
         populateStatusMessages();
     }
 
     public HttpQuery getQuery() {
-        if (path.contains("?")) {
-            return new HttpQuery(path);
+        if (uri.contains("?")) {
+            return new HttpQuery(uri);
         } else return null;
     }
 
     public String getPath() {
 
-        if (path.contains("?")) {
-            int questionPos = path.indexOf("?");
-            String substring = path.substring(0, questionPos);
+        if (uri.contains("?")) {
+            int questionPos = uri.indexOf("?");
+            String substring = uri.substring(0, questionPos);
             return substring;
         }
-        return path;
+        return uri;
     }
 
     public ArrayList<String> getPathParts() {
-        int questionPos = path.indexOf("?");
-        String pathParts = path.substring(0, questionPos);
+        int questionPos = uri.indexOf("?");
+        String uriParts = uri.substring(0, questionPos);
 
-        String[] partsArray = pathParts.split("/");
+        String[] partsArray = uriParts.split("/");
         ArrayList<String> pathPartsArrayList = new ArrayList<>(Arrays.asList(partsArray));
         pathPartsArrayList.remove(0);
 
@@ -43,7 +45,7 @@ public class HttpPath {
     }
 
     public String getParameter(String key) {
-        HttpQuery httpQuery = new HttpQuery(path);
+        HttpQuery httpQuery = new HttpQuery(uri);
         return httpQuery.getParameter(key);
     }
 
@@ -53,9 +55,9 @@ public class HttpPath {
         statusMessages.put("200", "OK");
         statusMessages.put("201", "Created");
         statusMessages.put("202", "Accepted");
-        statusMessages.put("203", " Non - Authoritative Information");
+        statusMessages.put("203", "Non - Authoritative Information");
         statusMessages.put("204", "No Content");
-        statusMessages.put("205", " Reset Content");
+        statusMessages.put("205", "Reset Content");
         statusMessages.put("206", "Partial Content");
         statusMessages.put("300", "Multiple Choices");
         statusMessages.put("301", "Moved Permanently");

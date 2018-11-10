@@ -38,7 +38,7 @@ public class HttpQuery {
                             parameters.put(key, value);
                             break;
                         case "body":
-                          parameters.putIfAbsent("status", "200");
+                            parameters.putIfAbsent("status", "200");
                             value = URLDecoder.decode(value, "UTF-8");
                             parameters.put(key, value);
                             break;
