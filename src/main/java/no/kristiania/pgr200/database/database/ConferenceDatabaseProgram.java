@@ -28,25 +28,25 @@ public class ConferenceDatabaseProgram {
         //Fikk ikke til å bruke Properties og lese fra fil:
         Properties prop = new Properties();
 
-        /*try {
+        try {
             FileReader reader = new FileReader("config.properties");
             prop.load(reader);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
-        }*/
+        }
 
         PGPoolingDataSource dataSource = new PGPoolingDataSource();
 
-        /*dataSource.setUrl(prop.getProperty("database"));
+        dataSource.setUrl(prop.getProperty("database"));
         dataSource.setUser(prop.getProperty("dbuser"));
-        dataSource.setPassword(prop.getProperty("dbpassword"));*/
+        dataSource.setPassword(prop.getProperty("dbpassword"));
 
 
-        dataSource.setUrl("jdbc:postgresql://localhost/postgres");
+        /*dataSource.setUrl("jdbc:postgresql://localhost/postgres");
         dataSource.setUser("postgres");
-        dataSource.setPassword("root");
+        dataSource.setPassword("root");*/
 
 
 
