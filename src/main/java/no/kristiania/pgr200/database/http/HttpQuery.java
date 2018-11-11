@@ -1,76 +1,73 @@
 package no.kristiania.pgr200.database.http;
 
+import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Optional;
 
 public class HttpQuery {
 
-    Map<String, String> parameters = new LinkedHashMap<>();
-    String uri;
-    HttpPath httpPath;
+    private Map<String, String> parameters = new LinkedHashMap<>();
 
-    public HttpQuery(String uri) {
-        httpPath = new HttpPath(uri);
-        try {
-
-            this.uri = uri;
-
-            int questionPos = uri.indexOf("?");
-            String parameter = uri.substring(questionPos + 1);
-
-
-            String key, value;
-
-            for (String s : parameter.split("&")) {
-                int equalPos = s.indexOf("=");
-                if (equalPos != -1) {
-                    key = s.substring(0, equalPos);
-                    value = s.substring(equalPos + 1);
-                    switch (key) {
-                        case "status":
-                            parameters.put(key, value);
-                            parameters.put("body", httpPath.getStatusMessage(value));
-
-                            break;
-                        case "Location":
-                            value = URLDecoder.decode(value, "UTF-8");
-                            parameters.put(key, value);
-                            break;
-                        case "body":
-                            parameters.putIfAbsent("status", "200");
-                            value = URLDecoder.decode(value, "UTF-8");
-                            parameters.put(key, value);
-                            break;
-                    }
-                }
-            }
-        } catch (Exception e) {
+    public HttpQuery(String query) {
+        for (String parameter : query.split("&")) {
+            parseParameter(parameter);
         }
     }
 
-
-    public String getParameter(String key) {
-       if(parameters.get(key) != null){
-         return parameters.get(key);
-       }
-       return null;
+    public HttpQuery() {
     }
 
+    public void parseParameter(String parameter) {
+        int equalsPos = parameter.indexOf('=');
+        parameters.put(
+                urlDecode(parameter.substring(0, equalsPos)),
+                urlDecode(parameter.substring(equalsPos+1)));
+    }
 
     @Override
     public String toString() {
-
-        String query = "";
-
-        for (Map.Entry<String, String> entry : parameters.entrySet()) {
-            if(uri.contains("status")) {
-                query += entry.getKey() + "=" + entry.getValue();
-            }
-            else if(uri.contains("body")) {
-                query += "&" + entry.getKey() + entry.getValue();
-            }
+        if (parameters.isEmpty()) {
+            return null;
         }
-        return query;
+        StringBuilder result = new StringBuilder();
+        for (String key : parameters.keySet()) {
+            if (result.length() > 0) {
+                result.append("&");
+            }
+            result
+                    .append(urlEncode(key))
+                    .append("=")
+                    .append(urlEncode(parameters.get(key)));
+        }
+        return result.toString();
+    }
+
+    private String urlDecode(String s) {
+        try {
+            return URLDecoder.decode(s, "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            throw new RuntimeException("UTF-8 URLDecode should always be supported", e);
+        }
+    }
+
+    private String urlEncode(String s) {
+        try {
+            return URLEncoder.encode(s, "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            throw new RuntimeException("UTF-8 URLDecode should always be supported", e);
+        }
+    }
+
+    public HttpQuery put(String key, String value) {
+        parameters.put(key, value);
+        return this;
+    }
+
+    public Optional<String> get(String key) {
+        return Optional.ofNullable(parameters.get(key));
     }
 }
+

@@ -7,7 +7,7 @@ import java.io.IOException;
 public class InnleveringMain {
     public static void main(String[] args) throws IOException {
         HttpEchoServer server = new HttpEchoServer(0);
-        server.runServer();
+        server.runServerThread();
         System.out.println(server.getPort());
     }
 }

@@ -10,7 +10,7 @@ public class HttpClientTest {
 
   @Test
   public void shouldExecuteRequest() throws Exception {
-    HttpRequest request = new HttpGetRequest("urlecho.appspot.com", 80, "/echo");
+    HttpRequest request = new HttpRequest("urlecho.appspot.com", 80, "/echo");
     HttpResponse response = request.execute();
 
     assertThat(response.getStatusCode()).isEqualTo(200);
@@ -19,7 +19,7 @@ public class HttpClientTest {
 
   @Test
   public void shouldReadResponseCode() throws Exception {
-    HttpRequest request = new HttpGetRequest("urlecho.appspot.com", 80,
+    HttpRequest request = new HttpRequest("urlecho.appspot.com", 80,
             "/echo?status=404");
     HttpResponse response = request.execute();
 
@@ -28,7 +28,7 @@ public class HttpClientTest {
 
   @Test
   public void shouldReadResponseHeaders() throws IOException {
-    HttpRequest request = new HttpGetRequest("urlecho.appspot.com", 80,
+    HttpRequest request = new HttpRequest("urlecho.appspot.com", 80,
             "/echo?status=307&Location=http://www.google.com");
 
     HttpResponse response = request.execute();
@@ -39,7 +39,7 @@ public class HttpClientTest {
 
   @Test
   public void shouldReadBody() throws IOException {
-    HttpRequest request = new HttpGetRequest("urlecho.appspot.com", 80,
+    HttpRequest request = new HttpRequest("urlecho.appspot.com", 80,
             "/echo?body=Hello+World");
     HttpResponse response = request.execute();
 
