@@ -60,16 +60,27 @@ public class ConferenceDatabaseProgram {
 
     private void run(String[] args) throws SQLException {
         String command = "";
+        String title;
+        String description;
         if (args.length > 0) {
             command = args[0];
         }
 
         if (command.toLowerCase().equals("insert")) {
             if (args.length >= 3) {
-                String title = args[1];
-                args[1] = title.substring(0, 1).toUpperCase() + title.substring(1);
-                talk = new ConferenceTalk(args[1], args[2]);
-                dao.insertTalk(talk);
+                if (args[1] != null || args[2] != null) {
+                    title = args[1];
+                    description = args[2];
+                    System.out.println(args[1] + "!!!!!!!!!!!!!");
+                    title = title.substring(0, 1).toUpperCase() + title.substring(1);
+                    talk = new ConferenceTalk(title, description);
+                    dao.insertTalk(talk);
+                } else {
+                    title = "no-title";
+                    description = "no-description";
+                    System.out.println("Title and description required!");
+                }
+
             } else {
                 System.out.println("Title and description required!");
             }
@@ -78,7 +89,7 @@ public class ConferenceDatabaseProgram {
             //System.out.println("All talks listed!!");
         } else if (command.toLowerCase().equals("delete")) {
             if (args.length >= 2) {
-                String title = args[1];
+                title = args[1];
                 args[1] = title.substring(0, 1).toUpperCase() + title.substring(1);
                 //for(int i = 0; i < dao.listAll().size(); i++) {
                 //System.out.println(dao.listAll().get(i));

@@ -39,7 +39,7 @@ public class HttpHeaders {
         headers.put(key, value);
     }
 
-    public String get(String key) {
+    public String getHeader(String key) {
         return headers.get(key);
     }
 
@@ -55,7 +55,7 @@ public class HttpHeaders {
     }
 
     public int getContentLength() {
-        String contentLength = get("Content-Length");
+        String contentLength = getHeader("Content-Length");
         return contentLength != null ? Integer.parseInt(contentLength) : -1;
     }
 }

@@ -3,6 +3,7 @@ package no.kristiania.pgr200.database.http;
 import java.io.IOException;
 import java.net.Socket;
 import java.sql.SQLException;
+import java.util.Optional;
 
 public class HttpRequest {
 
@@ -40,7 +41,7 @@ public class HttpRequest {
             }
 
             try {
-                controller.trigger(this.method);
+                controller.trigger(this.method, getBodyParts());
             } catch (SQLException e) {
                 e.printStackTrace();
             }
@@ -60,5 +61,23 @@ public class HttpRequest {
     public void setFormBody(HttpQuery query) {
         this.body = query.toString();
         httpHeaders.put("Content-type", "application/x-www-form-urlencoded");
+    }
+
+    public String[] getBodyParts() {
+        String[] parts = new String[10];
+        if (body != null) {
+
+            int ampPos = body.indexOf("&");
+            body = body.substring(0, ampPos);
+
+            int equalPos = body.indexOf("=");
+            String bodyContent = body.substring(equalPos + 1);
+
+            int addPos = bodyContent.indexOf("+");
+            parts[0] = bodyContent.substring(0, addPos);
+            parts[1] = bodyContent.substring(addPos + 1);
+        }
+        else {body = "";}
+        return parts;
     }
 }

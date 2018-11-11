@@ -32,7 +32,7 @@ public class HttpResponse {
     }
 
     public String getHeader(String key) {
-        return responseHeaders.get(key);
+        return responseHeaders.getHeader(key);
     }
 
     public String getBody() {

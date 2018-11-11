@@ -9,7 +9,6 @@ import java.util.Map;
 public class HttpEchoServer {
 
     private ServerSocket serverSocket;
-    Controller controller = new Controller();
 
     public HttpEchoServer(int port) throws IOException {
         serverSocket = new ServerSocket(port);

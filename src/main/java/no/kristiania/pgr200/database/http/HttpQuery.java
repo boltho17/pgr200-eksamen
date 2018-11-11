@@ -12,9 +12,12 @@ public class HttpQuery {
     private Map<String, String> parameters = new LinkedHashMap<>();
 
     public HttpQuery(String query) {
-        for (String parameter : query.split("&")) {
-            parseParameter(parameter);
+        if(query != null) {
+            for (String parameter : query.split("&")) {
+                parseParameter(parameter);
+            }
         }
+        else{parameters.put("status", "500");}
     }
 
     public HttpQuery() {
