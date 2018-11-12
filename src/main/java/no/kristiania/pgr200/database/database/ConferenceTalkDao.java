@@ -116,7 +116,7 @@ public class ConferenceTalkDao {
             talks.add(talk);
             System.out.println(talk.getId() + "." +
                     "\n" + "Title: " + talk.getTitle() +
-                    "\n" + "Descrption: " + talk.getDescription() +
+                    "\n" + "Description: " + talk.getDescription() +
                     "\n" + "Topic: " + talk.getTopic());
             System.out.println();
         }

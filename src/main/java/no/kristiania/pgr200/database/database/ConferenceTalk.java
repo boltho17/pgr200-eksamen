@@ -13,9 +13,9 @@ public class ConferenceTalk {
         this.topic = topic;
     }
 
-    public ConferenceTalk () {
+    public ConferenceTalk () {}
 
-    }
+
     public int getId() {
         return id;
     }
