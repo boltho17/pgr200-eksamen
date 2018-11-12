@@ -15,8 +15,16 @@ public class AddTalkCommand implements ConferenceClientCommand {
         this.topic = topic;
     }
 
+    public String getTitle() {
+        return title;
+    }
+
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public String getDescription() {
+        return description;
     }
 
     public void setDescription(String description) {

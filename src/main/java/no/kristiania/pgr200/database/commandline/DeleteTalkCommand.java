@@ -4,6 +4,7 @@ public class DeleteTalkCommand implements ConferenceClientCommand {
 
     private String id;
     private String title;
+    private String description;
 
     public DeleteTalkCommand() {
     }
@@ -16,7 +17,15 @@ public class DeleteTalkCommand implements ConferenceClientCommand {
         this.id = id;
     }
 
+    public String getTitle() {
+        return title;
+    }
+
     public void setTitle(String title) {this.id = id;}
+
+    public String getDescription() {
+        return description;
+    }
 
 
     @Override

@@ -13,4 +13,6 @@ public interface ConferenceClientCommand {
 
     void readArguments(String[] args);
 
+    String getTitle();
+    String getDescription();
 }

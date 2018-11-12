@@ -1,5 +1,6 @@
 package no.kristiania.pgr200.database;
 
+import no.kristiania.pgr200.database.commandline.ConferenceCommandLineClient;
 import no.kristiania.pgr200.database.http.HttpEchoServer;
 
 import java.io.IOException;
@@ -9,5 +10,7 @@ public class InnleveringMain {
         HttpEchoServer server = new HttpEchoServer(0);
         server.runServerThread();
         System.out.println(server.getPort());
+        ConferenceCommandLineClient conferenceCommandLineClient = new ConferenceCommandLineClient();
+        conferenceCommandLineClient.decodeCommand(args);
     }
 }

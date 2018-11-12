@@ -12,14 +12,13 @@ import java.util.Properties;
 
 public class ConferenceDataBaseProgramTest {
 
-    private DataSource dataSource;
-
     @Test
-    public void shouldCreateDataSource() throws SQLException {
+    public void shouldCreateDataSource() {
         Properties prop = new Properties();
         try {
-            FileReader reader = new FileReader("config.properties");
-            prop.load(reader);
+            try (FileReader reader = new FileReader("config.properties")) {
+                prop.load(reader);
+            }
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {

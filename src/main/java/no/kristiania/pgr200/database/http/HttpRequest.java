@@ -1,9 +1,8 @@
 package no.kristiania.pgr200.database.http;
+import no.kristiania.pgr200.database.commandline.ConferenceCommandLineClient;
 
 import java.io.IOException;
 import java.net.Socket;
-import java.sql.SQLException;
-import java.util.Optional;
 
 public class HttpRequest {
 
@@ -11,8 +10,10 @@ public class HttpRequest {
     private int port;
     private String requestTarget;
     private String method = "GET";
-    private HttpHeaders httpHeaders;
     private String body;
+    private HttpHeaders httpHeaders;
+    ConferenceCommandLineClient conferenceCommandLineClient;
+
 
     public HttpRequest(String hostname, int port, String requestTarget) {
         this.hostname = hostname;

@@ -20,6 +20,11 @@ public class ConferenceCliClientTest {
                 "-title", title,
                 "-description", description
         });
+
+        //TEST
+        System.out.println(command.getTitle());
+        System.out.println(command.getDescription()+"!?!?!?!?!");
+
         AddTalkCommand expectedCommand = new AddTalkCommand();
         expectedCommand.setTitle(title);
         expectedCommand.setDescription(description);

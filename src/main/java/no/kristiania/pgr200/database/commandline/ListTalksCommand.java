@@ -2,7 +2,7 @@ package no.kristiania.pgr200.database.commandline;
 
 public class ListTalksCommand implements ConferenceClientCommand {
 
-    private String id, title, topic;
+    private String id, title, description, topic;
 
     public ListTalksCommand() {}
 
@@ -28,6 +28,9 @@ public class ListTalksCommand implements ConferenceClientCommand {
         this.title = title;
     }
 
+    public String getDescription() {
+        return description;
+    }
 
     public String getTopic() {
         return topic;

@@ -52,9 +52,9 @@ public class ConferenceCommandLineClient {
      */
     private DeleteTalkCommand createDeleteCommand(String[] strings) {
 
-        String title = getArgument("-title", strings, "unknown");
+        String id = getArgument("-id", strings, null);
 
-        return new DeleteTalkCommand(title);
+        return new DeleteTalkCommand(id);
     }
 
 

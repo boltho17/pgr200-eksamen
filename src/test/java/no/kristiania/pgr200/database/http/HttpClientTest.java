@@ -19,7 +19,7 @@ public class HttpClientTest {
 
   @Test
   public void shouldReadResponseCode() throws Exception {
-    HttpRequest request = new HttpRequest("urlecho.appspot.com", 80,
+    HttpRequest request = new HttpGetRequest("urlecho.appspot.com", 80,
             "/echo?status=404");
     HttpResponse response = request.execute();
 
