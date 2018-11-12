@@ -37,7 +37,7 @@ public class ConferenceTalksDaoTest {
         ConferenceTalkDao dao = new ConferenceTalkDao(cdp.createDataSource());
         ConferenceTalk talk = new ConferenceTalk("Delete", "This", "Thank you!");
         dao.insertTalk(talk);
-        dao.deleteTalk("Delete This");
+        dao.deleteTalk(talk.getId());
         ConferenceTalk talk2 = new ConferenceTalk("After the", "deleted", "Wohoo!");
         dao.insertTalk(talk2);
         List<ConferenceTalk> talks = dao.listAll();
