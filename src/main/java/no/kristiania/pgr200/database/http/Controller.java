@@ -22,7 +22,7 @@ public class Controller {
                 break;
 
             case "GET":
-                cdp.main(new String[]{"list"});
+                cdp.main(new String[]{"list", path});
                 break;
 
             case "DELETE":

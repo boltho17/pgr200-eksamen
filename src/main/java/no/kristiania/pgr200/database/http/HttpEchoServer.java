@@ -52,9 +52,6 @@ public class HttpEchoServer {
             String requestTarget = requestLine.split(" ")[1];
             HttpPath path = new HttpPath(requestTarget);
 
-            //prints path for testing
-            System.out.println(path.getPath());
-
             HttpHeaders headers = new HttpHeaders();
             headers.readHeaders(clientSocket.getInputStream());
 
@@ -62,7 +59,6 @@ public class HttpEchoServer {
 
             if (method.equals("POST")) {
                 query = new HttpQuery(HttpIO.readBody(clientSocket.getInputStream(), headers.getContentLength()));
-                System.out.println(query.toString());
             } else {
                 query = path.query();
                 System.out.println(query.toString());

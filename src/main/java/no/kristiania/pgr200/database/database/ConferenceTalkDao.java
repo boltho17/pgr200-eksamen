@@ -34,15 +34,56 @@ public class ConferenceTalkDao {
                             statement.setString(2, talk.getDescription());
 
                             statement.executeUpdate();
-                            System.out.println("Success! The talk " + talk.getTitle() + " has been added.");
+                            System.out.println("Success! The talk " + talk.getTitle() + " has been added.\n");
                         }
                     } else {
-                        System.out.println("Failure! The talk " + talk.getTitle() + " already exists.");
+                        System.out.println("Failure! The talk " + talk.getTitle() + " already exists. \n");
                     }
                 }
             }
         }
     }
+
+    //lister opp en bestemt talk basert på input. Gir beskjed om den ikke eksisterer.
+    public List<ConferenceTalk> list(int talkId) throws SQLException {
+        List<ConferenceTalk> talks = new ArrayList<>();
+        try (Connection conn = dataSource.getConnection()) {
+            try (PreparedStatement ps = conn.prepareStatement("select count(*) from CONFERENCE_TALK")) {
+
+                ResultSet rs = ps.executeQuery();
+                int n;
+                if (rs.next()) {
+                    n = rs.getInt(1);
+
+                    if (n > 0) {
+                        String sql = "select * from conference_talk where id = ?";
+                        try (PreparedStatement statement = conn.prepareStatement(sql)) {
+                            statement.setInt(1, talkId);
+                            try (ResultSet rs2 = statement.executeQuery()) {
+                                while (rs2.next()) {
+                                    ConferenceTalk talk = new ConferenceTalk();
+                                    talk.setId(rs2.getInt("id"));
+                                    talk.setTitle(rs2.getString("title"));
+                                    talk.setDescription(rs2.getString("description"));
+                                    talks.add(talk);
+                                    System.out.println(talk.getId() + "." +
+                                            "\n" + "Title: " + talk.getTitle() +
+                                            "\n" + "Descrption: " + talk.getDescription());
+                                    System.out.println();
+                                }
+                                System.out.println("Talk #" + talkId + " is listed. \n");
+                            }
+                        }
+                    } else {
+                        System.out.println("No talk with id " + talkId + " currently registered in the database.\n");
+                    }
+                }
+            }
+        }
+        return talks;
+
+    }
+
 
     //Lister opp alle talks. Gir beskjed hvis det ikke finnes noen talks å liste.
     public List<ConferenceTalk> listAll() throws SQLException {
@@ -70,11 +111,11 @@ public class ConferenceTalkDao {
                                             "\n" + "Descrption: " + talk.getDescription());
                                     System.out.println();
                                 }
-                                System.out.println("All talks listed");
+                                System.out.println("All talks listed. \n");
                             }
                         }
                     } else {
-                        System.out.println("No talks currently registered in the database.");
+                        System.out.println("No talks currently registered in the database.\n");
                     }
                 }
             }
@@ -100,9 +141,9 @@ public class ConferenceTalkDao {
                             statement.setString(1, title);
 
                             statement.executeUpdate();
-                            System.out.println("Job done! The talk " + title + " has been deleted.");
+                            System.out.println("Job done! The talk " + title + " has been deleted.\n");
                         }
-                    } else System.out.println("No talk with the title " + title + " exists.");
+                    } else System.out.println("No talk with the title " + title + " exists.\n");
                 }
             }
         }
@@ -115,7 +156,7 @@ public class ConferenceTalkDao {
             try (PreparedStatement statement = conn.prepareStatement(sql)) {
 
                 statement.executeUpdate();
-                System.out.println("All talks deleted, identifier reset.");
+                System.out.println("All talks deleted, identifier reset.\n");
             }
         }
     }

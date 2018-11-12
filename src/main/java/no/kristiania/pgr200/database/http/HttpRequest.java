@@ -39,12 +39,6 @@ public class HttpRequest {
                 socket.getOutputStream().write(body.getBytes());
             }
 
-            /*try {
-                controller.trigger(this.method);
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }*/
-
             return new HttpResponse(socket);
         }
     }
