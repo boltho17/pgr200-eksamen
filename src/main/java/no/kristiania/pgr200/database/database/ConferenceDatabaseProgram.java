@@ -71,7 +71,6 @@ public class ConferenceDatabaseProgram {
                 if (args[1] != null || args[2] != null) {
                     title = args[1];
                     description = args[2];
-                    System.out.println(args[1] + "!!!!!!!!!!!!!");
                     title = title.substring(0, 1).toUpperCase() + title.substring(1);
                     talk = new ConferenceTalk(title, description);
                     dao.insertTalk(talk);

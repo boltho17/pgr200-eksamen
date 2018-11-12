@@ -3,12 +3,15 @@ package no.kristiania.pgr200.database.http;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
 public class HttpEchoServer {
 
+    String method;
     private ServerSocket serverSocket;
+    Controller controller;
 
     public HttpEchoServer(int port) throws IOException {
         serverSocket = new ServerSocket(port);
@@ -49,13 +52,27 @@ public class HttpEchoServer {
             String requestTarget = requestLine.split(" ")[1];
             HttpPath path = new HttpPath(requestTarget);
 
+            //prints path for testing
+            System.out.println(path.getPath());
+
             HttpHeaders headers = new HttpHeaders();
             headers.readHeaders(clientSocket.getInputStream());
 
-            if (requestLine.split(" ")[0].equals("POST")) {
+            method = requestLine.split(" ")[0];
+
+            if (method.equals("POST")) {
                 query = new HttpQuery(HttpIO.readBody(clientSocket.getInputStream(), headers.getContentLength()));
+                System.out.println(query.toString());
             } else {
                 query = path.query();
+                System.out.println(query.toString());
+            }
+
+            controller = new Controller(method, path.getPath(), query.toString());
+            try {
+                controller.trigger();
+            } catch (SQLException e) {
+                e.printStackTrace();
             }
 
             statusCode = query.get("status").orElse("200");
@@ -87,6 +104,7 @@ public class HttpEchoServer {
 
 
     private static Map<String, String> statusMessages = new HashMap<>();
+
     static {
         statusMessages.put("100", "Continue");
         statusMessages.put("101", "Switching Protocols");

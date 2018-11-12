@@ -7,6 +7,8 @@ public class HttpPath {
     private String path;
     private HttpQuery query = new HttpQuery();
 
+    public HttpPath() {}
+
     public HttpPath(String fullPath) {
         int questionPos = fullPath.indexOf('?');
         if (questionPos > 0) {

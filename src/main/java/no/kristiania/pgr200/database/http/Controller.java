@@ -6,12 +6,19 @@ import java.sql.SQLException;
 
 public class Controller {
 
+    String method, path, query, body;
     ConferenceDatabaseProgram cdp = new ConferenceDatabaseProgram();
 
-    public void trigger(String httpMethod, String[] body) throws SQLException {
-        switch (httpMethod) {
+    public Controller(String method, String path, String query) {
+        this.method = method;
+        this.path = path;
+        this.query = query;
+    }
+
+    public void trigger() throws SQLException {
+        switch (method) {
             case "POST":
-                cdp.main(new String[]{"insert", body[0], body[1] });
+                cdp.main(new String[]{"insert", getBodyParts()[0], getBodyParts()[1]});
                 break;
 
             case "GET":
@@ -24,5 +31,22 @@ public class Controller {
 
             default: break;
         }
+    }
+
+    public String[] getBodyParts() {
+        String[] parts = new String[10];
+        if (query != null && query.contains("&")) {
+            int ampPos = query.indexOf("&");
+            body = query.substring(0, ampPos);
+
+            int equalPos = body.indexOf("=");
+            String bodyContent = body.substring(equalPos + 1);
+
+            int addPos = bodyContent.indexOf("+");
+            parts[0] = bodyContent.substring(0, addPos);
+            parts[1] = bodyContent.substring(addPos + 1);
+        }
+        else {body = "";}
+        return parts;
     }
 }

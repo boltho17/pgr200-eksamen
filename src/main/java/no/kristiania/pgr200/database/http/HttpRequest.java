@@ -13,7 +13,6 @@ public class HttpRequest {
     private String method = "GET";
     private HttpHeaders httpHeaders;
     private String body;
-    Controller controller = new Controller();
 
     public HttpRequest(String hostname, int port, String requestTarget) {
         this.hostname = hostname;
@@ -40,11 +39,11 @@ public class HttpRequest {
                 socket.getOutputStream().write(body.getBytes());
             }
 
-            try {
-                controller.trigger(this.method, getBodyParts());
+            /*try {
+                controller.trigger(this.method);
             } catch (SQLException e) {
                 e.printStackTrace();
-            }
+            }*/
 
             return new HttpResponse(socket);
         }
@@ -61,23 +60,5 @@ public class HttpRequest {
     public void setFormBody(HttpQuery query) {
         this.body = query.toString();
         httpHeaders.put("Content-type", "application/x-www-form-urlencoded");
-    }
-
-    public String[] getBodyParts() {
-        String[] parts = new String[10];
-        if (body != null) {
-
-            int ampPos = body.indexOf("&");
-            body = body.substring(0, ampPos);
-
-            int equalPos = body.indexOf("=");
-            String bodyContent = body.substring(equalPos + 1);
-
-            int addPos = bodyContent.indexOf("+");
-            parts[0] = bodyContent.substring(0, addPos);
-            parts[1] = bodyContent.substring(addPos + 1);
-        }
-        else {body = "";}
-        return parts;
     }
 }
