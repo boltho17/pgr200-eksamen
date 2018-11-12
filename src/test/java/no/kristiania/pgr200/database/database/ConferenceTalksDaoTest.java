@@ -13,7 +13,7 @@ public class ConferenceTalksDaoTest {
     public void shouldInsertConferenceTalks() throws SQLException {
         ConferenceDatabaseProgram cdp = new ConferenceDatabaseProgram();
         ConferenceTalkDao dao = new ConferenceTalkDao(cdp.createDataSource());
-        ConferenceTalk talk = new ConferenceTalk("Hello", "World");
+        ConferenceTalk talk = new ConferenceTalk("Hello", "World", "Java");
         dao.insertTalk(talk);
         }
 
@@ -21,7 +21,7 @@ public class ConferenceTalksDaoTest {
     public void shouldListAllTalks() throws SQLException {
         ConferenceDatabaseProgram cdp = new ConferenceDatabaseProgram();
         ConferenceTalkDao dao = new ConferenceTalkDao(cdp.createDataSource());
-        ConferenceTalk talk = new ConferenceTalk("Greetings", "Mr. Bond");
+        ConferenceTalk talk = new ConferenceTalk("Greetings", "Mr.", "Bond");
         dao.insertTalk(talk);
         List<ConferenceTalk> talks = dao.listAll();
         assertThat(talks)
@@ -35,10 +35,10 @@ public class ConferenceTalksDaoTest {
     public void shouldDeleteTalkWithTitle() throws SQLException {
         ConferenceDatabaseProgram cdp = new ConferenceDatabaseProgram();
         ConferenceTalkDao dao = new ConferenceTalkDao(cdp.createDataSource());
-        ConferenceTalk talk = new ConferenceTalk("Delete This", "Thank you!");
+        ConferenceTalk talk = new ConferenceTalk("Delete", "This", "Thank you!");
         dao.insertTalk(talk);
         dao.deleteTalk("Delete This");
-        ConferenceTalk talk2 = new ConferenceTalk("After the deleted", "Wohoo!");
+        ConferenceTalk talk2 = new ConferenceTalk("After the", "deleted", "Wohoo!");
         dao.insertTalk(talk2);
         List<ConferenceTalk> talks = dao.listAll();
         assertThat(talks)
@@ -53,14 +53,14 @@ public class ConferenceTalksDaoTest {
         ConferenceDatabaseProgram cdp = new ConferenceDatabaseProgram();
         ConferenceTalkDao dao = new ConferenceTalkDao(cdp.createDataSource());
         dao.deleteAll();
-        ConferenceTalk talk1 = new ConferenceTalk("ABC", "123");
-        ConferenceTalk talk2 = new ConferenceTalk("ABCD", "1234");
-        ConferenceTalk talk3 = new ConferenceTalk("ABCDE", "12345");
-        ConferenceTalk talk4 = new ConferenceTalk("ABCDEF", "123456");
-        ConferenceTalk talk5 = new ConferenceTalk("ABCDEFG", "1234567");
-        ConferenceTalk talk6 = new ConferenceTalk("ABCDEFGH", "12345678");
-        ConferenceTalk talk7 = new ConferenceTalk("ABCDEFGHI", "123456789");
-        ConferenceTalk talk8 = new ConferenceTalk("ABCDEFGHIJ", "1234567890");
+        ConferenceTalk talk1 = new ConferenceTalk("ABC", "123", "A1");
+        ConferenceTalk talk2 = new ConferenceTalk("ABCD", "1234", "A2");
+        ConferenceTalk talk3 = new ConferenceTalk("ABCDE", "12345", "A3");
+        ConferenceTalk talk4 = new ConferenceTalk("ABCDEF", "123456", "A4");
+        ConferenceTalk talk5 = new ConferenceTalk("ABCDEFG", "1234567", "A5");
+        ConferenceTalk talk6 = new ConferenceTalk("ABCDEFGH", "12345678", "A6");
+        ConferenceTalk talk7 = new ConferenceTalk("ABCDEFGHI", "123456789", "A7");
+        ConferenceTalk talk8 = new ConferenceTalk("ABCDEFGHIJ", "1234567890", "A8");
         dao.insertTalk(talk1);
         dao.insertTalk(talk2);
         dao.insertTalk(talk3);
@@ -75,7 +75,7 @@ public class ConferenceTalksDaoTest {
     public void shouldDeleteAllTalks() throws SQLException {
         ConferenceDatabaseProgram cdp = new ConferenceDatabaseProgram();
         ConferenceTalkDao dao = new ConferenceTalkDao(cdp.createDataSource());
-        ConferenceTalk talk = new ConferenceTalk("Delete This", "Thank you!");
+        ConferenceTalk talk = new ConferenceTalk("Delete", "This", "Thank you!");
         dao.insertTalk(talk);
         dao.deleteAll();
         List<ConferenceTalk> talks = dao.listAll();

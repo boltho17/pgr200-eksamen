@@ -28,10 +28,11 @@ public class ConferenceTalkDao {
                     n = rs.getInt(1);
 
                     if (n < 1) {
-                        String sql = "insert into CONFERENCE_TALK (TITLE, DESCRIPTION) values (?, ?)";
+                        String sql = "insert into CONFERENCE_TALK (TITLE, DESCRIPTION, TOPIC) values (?, ?, ?)";
                         try (PreparedStatement statement = conn.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS)) {
                             statement.setString(1, talk.getTitle());
                             statement.setString(2, talk.getDescription());
+                            statement.setString(3, talk.getTopic());
 
                             statement.executeUpdate();
                             System.out.println("Success! The talk " + talk.getTitle() + " has been added.\n");
@@ -45,7 +46,7 @@ public class ConferenceTalkDao {
     }
 
     //lister opp en bestemt talk basert på input. Gir beskjed om den ikke eksisterer.
-    public List<ConferenceTalk> list(int talkId) throws SQLException {
+    public List<ConferenceTalk> show(int talkId) throws SQLException {
         List<ConferenceTalk> talks = new ArrayList<>();
         try (Connection conn = dataSource.getConnection()) {
             try (PreparedStatement ps = conn.prepareStatement("select count(*) from CONFERENCE_TALK where id = ?")) {
@@ -63,7 +64,7 @@ public class ConferenceTalkDao {
                             statement.setInt(1, talkId);
                             try (ResultSet rs2 = statement.executeQuery()) {
                                 listParams(talks, rs2);
-                                System.out.println("Talk #" + talkId + " is listed. \n");
+                                System.out.println("Talk #" + talkId + " displayed. \n");
                             }
                         }
                     } else {
@@ -111,10 +112,12 @@ public class ConferenceTalkDao {
             talk.setId(rs2.getInt("id"));
             talk.setTitle(rs2.getString("title"));
             talk.setDescription(rs2.getString("description"));
+            talk.setTopic(rs2.getString("topic"));
             talks.add(talk);
             System.out.println(talk.getId() + "." +
                     "\n" + "Title: " + talk.getTitle() +
-                    "\n" + "Descrption: " + talk.getDescription());
+                    "\n" + "Descrption: " + talk.getDescription() +
+                    "\n" + "Topic: " + talk.getTopic());
             System.out.println();
         }
     }

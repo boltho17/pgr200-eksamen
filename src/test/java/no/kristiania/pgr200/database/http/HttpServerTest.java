@@ -73,11 +73,11 @@ public class HttpServerTest {
     public void test() throws IOException {
         HttpRequest request = new HttpRequest("localhost", server.getPort(), "/api/talks/1?status=200");
         HttpResponse response = request.execute();
-        HttpPath path = new HttpPath("/api/talks/2?status=200&body=title=test%26description=hello");
+        HttpPath path = new HttpPath("/api/talks/2?status=200&body=title=test%26description=hello%26topic=java");
         assertThat(path.getPath()).isEqualTo("/api/talks/2");
         //assertThat(path.getPathParts()).containsExactly("api", "talks");
         assertThat(path.getParameter("status")).hasValue("200");
-        assertThat(path.getParameter("body")).hasValue("title=test&description=hello");
+        assertThat(path.getParameter("body")).hasValue("title=test&description=hello&topic=java");
 
     }
 }

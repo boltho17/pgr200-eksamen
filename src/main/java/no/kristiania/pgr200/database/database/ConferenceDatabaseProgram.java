@@ -48,6 +48,7 @@ public class ConferenceDatabaseProgram {
         //flyway.baseline();
         flyway.migrate();*/
         Flyway flyway = Flyway.configure().dataSource(dataSource).load();
+        flyway.clean();
         flyway.migrate();
 
         return dataSource;
@@ -60,9 +61,8 @@ public class ConferenceDatabaseProgram {
 
     private void run(String[] args) throws SQLException {
         String command = "";
-        String title;
-        String path;
-        String description;
+        String title, path, description, topic;
+
         if (args.length > 0) {
             command = args[0];
         }
@@ -72,8 +72,9 @@ public class ConferenceDatabaseProgram {
                 if (args[1] != null && args[2] != null) {
                     title = args[1];
                     description = args[2];
+                    if(args.length == 4) {topic = args[3];} else{topic = "no-topic";}
                     title = title.substring(0, 1).toUpperCase() + title.substring(1);
-                    talk = new ConferenceTalk(title, description);
+                    talk = new ConferenceTalk(title, description, topic);
                     dao.insertTalk(talk);
                 } else {
                     title = "no-title";
@@ -91,7 +92,7 @@ public class ConferenceDatabaseProgram {
                 if (path.contains("/api/talks/")) {
                     int slashPos = path.indexOf("/", path.indexOf("/") + 2);
                     int pathNum = Integer.parseInt(path.substring(slashPos).substring(slashPos + 3));
-                    dao.list(pathNum);
+                    dao.show(pathNum);
                 }
                 if (path.equals("/api/talks")) {
                     dao.listAll();
