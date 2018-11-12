@@ -69,7 +69,7 @@ public class ConferenceDatabaseProgram {
 
         if (command.toLowerCase().equals("insert")) {
             if (args.length >= 3) {
-                if (args[1] != null || args[2] != null) {
+                if (args[1] != null && args[2] != null) {
                     title = args[1];
                     description = args[2];
                     title = title.substring(0, 1).toUpperCase() + title.substring(1);
@@ -78,7 +78,7 @@ public class ConferenceDatabaseProgram {
                 } else {
                     title = "no-title";
                     description = "no-description";
-                    System.out.println("Title and description required!");
+                    System.out.println("Title and description required!\n");
                 }
 
             } else {
@@ -94,30 +94,26 @@ public class ConferenceDatabaseProgram {
                     dao.list(pathNum);
                 }
                 if (path.equals("/api/talks")) {
-                dao.listAll();
-                //System.out.println("All talks listed!!");
+                    dao.listAll();
+                    //System.out.println("All talks listed!!");
+                }
             }
+        } else if (command.toLowerCase().equals("delete")) {
+            if (args.length >= 2) {
+                title = args[1];
+                args[1] = title.substring(0, 1).toUpperCase() + title.substring(1);
+                //for(int i = 0; i < dao.listAll().size(); i++) {
+                //System.out.println(dao.listAll().get(i));
+                //if(dao.listAll().get(i).equals(title)) {
+                dao.deleteTalk(args[1]);
+            } else {
+                System.out.println("Please specify which Talk you want to delete.");
+            }
+        } else
+
+        {
+            System.out.println("Please type command: \"Insert\", \"Delete\" or \"List\"");
+            System.exit(1);
         }
-    } else if(command.toLowerCase().
-
-    equals("delete"))
-
-    {
-        if (args.length >= 2) {
-            title = args[1];
-            args[1] = title.substring(0, 1).toUpperCase() + title.substring(1);
-            //for(int i = 0; i < dao.listAll().size(); i++) {
-            //System.out.println(dao.listAll().get(i));
-            //if(dao.listAll().get(i).equals(title)) {
-            dao.deleteTalk(args[1]);
-        } else {
-            System.out.println("Please specify which Talk you want to delete.");
-        }
-    } else
-
-    {
-        System.out.println("Please type command: \"Insert\", \"Delete\" or \"List\"");
-        System.exit(1);
     }
-}
 }

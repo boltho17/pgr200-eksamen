@@ -48,7 +48,9 @@ public class ConferenceTalkDao {
     public List<ConferenceTalk> list(int talkId) throws SQLException {
         List<ConferenceTalk> talks = new ArrayList<>();
         try (Connection conn = dataSource.getConnection()) {
-            try (PreparedStatement ps = conn.prepareStatement("select count(*) from CONFERENCE_TALK")) {
+            try (PreparedStatement ps = conn.prepareStatement("select count(*) from CONFERENCE_TALK where id = ?")) {
+                ps.setInt(1, talkId);
+
 
                 ResultSet rs = ps.executeQuery();
                 int n;
@@ -60,17 +62,7 @@ public class ConferenceTalkDao {
                         try (PreparedStatement statement = conn.prepareStatement(sql)) {
                             statement.setInt(1, talkId);
                             try (ResultSet rs2 = statement.executeQuery()) {
-                                while (rs2.next()) {
-                                    ConferenceTalk talk = new ConferenceTalk();
-                                    talk.setId(rs2.getInt("id"));
-                                    talk.setTitle(rs2.getString("title"));
-                                    talk.setDescription(rs2.getString("description"));
-                                    talks.add(talk);
-                                    System.out.println(talk.getId() + "." +
-                                            "\n" + "Title: " + talk.getTitle() +
-                                            "\n" + "Descrption: " + talk.getDescription());
-                                    System.out.println();
-                                }
+                                listParams(talks, rs2);
                                 System.out.println("Talk #" + talkId + " is listed. \n");
                             }
                         }
@@ -83,7 +75,6 @@ public class ConferenceTalkDao {
         return talks;
 
     }
-
 
     //Lister opp alle talks. Gir beskjed hvis det ikke finnes noen talks å liste.
     public List<ConferenceTalk> listAll() throws SQLException {
@@ -100,17 +91,7 @@ public class ConferenceTalkDao {
                         String sql = "select * from conference_talk";
                         try (PreparedStatement statement = conn.prepareStatement(sql)) {
                             try (ResultSet rs2 = statement.executeQuery()) {
-                                while (rs2.next()) {
-                                    ConferenceTalk talk = new ConferenceTalk();
-                                    talk.setId(rs2.getInt("id"));
-                                    talk.setTitle(rs2.getString("title"));
-                                    talk.setDescription(rs2.getString("description"));
-                                    talks.add(talk);
-                                    System.out.println(talk.getId() + "." +
-                                            "\n" + "Title: " + talk.getTitle() +
-                                            "\n" + "Descrption: " + talk.getDescription());
-                                    System.out.println();
-                                }
+                                listParams(talks, rs2);
                                 System.out.println("All talks listed. \n");
                             }
                         }
@@ -121,6 +102,21 @@ public class ConferenceTalkDao {
             }
         }
         return talks;
+    }
+
+    //Duplikatkode fra list og listAll
+    private void listParams(List<ConferenceTalk> talks, ResultSet rs2) throws SQLException {
+        while (rs2.next()) {
+            ConferenceTalk talk = new ConferenceTalk();
+            talk.setId(rs2.getInt("id"));
+            talk.setTitle(rs2.getString("title"));
+            talk.setDescription(rs2.getString("description"));
+            talks.add(talk);
+            System.out.println(talk.getId() + "." +
+                    "\n" + "Title: " + talk.getTitle() +
+                    "\n" + "Descrption: " + talk.getDescription());
+            System.out.println();
+        }
     }
 
     //Sletter en talk basert på tittel. Gir beskjed hvis en talk med den gitte tittelen ikke eksisterer.

@@ -26,7 +26,7 @@ public class Controller {
                 break;
 
             case "DELETE":
-                cdp.main(new String[]{"delete"});
+                cdp.main(new String[]{"delete", path});
                 break;
 
             default: break;
