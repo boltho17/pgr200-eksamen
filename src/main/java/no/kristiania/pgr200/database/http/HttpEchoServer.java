@@ -61,7 +61,6 @@ public class HttpEchoServer {
                 query = new HttpQuery(HttpIO.readBody(clientSocket.getInputStream(), headers.getContentLength()));
             } else {
                 query = path.query();
-                System.out.println(query.toString());
             }
 
             controller = new Controller(method, path.getPath(), query.toString());

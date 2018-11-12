@@ -41,15 +41,9 @@ public class ConferenceDatabaseProgram {
         dataSource.setUser(prop.getProperty("dbuser"));
         dataSource.setPassword(prop.getProperty("dbpassword"));
 
-
-        /*Flyway flyway = new Flyway();
-        flyway.setDataSource(dataSource);
-        //flyway.clean();
-        //flyway.baseline();
-        flyway.migrate();*/
         Flyway flyway = Flyway.configure().dataSource(dataSource).load();
-        flyway.clean();
         flyway.migrate();
+        //flyway.clean();
 
         return dataSource;
     }
@@ -85,8 +79,9 @@ public class ConferenceDatabaseProgram {
             } else {
                 System.out.println("Title and description required!");
             }
-        } else if (command.toLowerCase().equals("list") && args.length > 0) {
-            path = args[1];
+        } else if (command.toLowerCase().equals("list")) {
+            // GET /api/talks/1
+            if(args.length > 1) { path = args[1]; } else {path = "";dao.listAll();}
             if (path.matches(".*/.*/.*")) ;
             {
                 if (path.contains("/api/talks/")) {

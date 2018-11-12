@@ -52,7 +52,7 @@ public class ConferenceTalksDaoTest {
     public void shouldPopulateConferenceTalks() throws SQLException {
         ConferenceDatabaseProgram cdp = new ConferenceDatabaseProgram();
         ConferenceTalkDao dao = new ConferenceTalkDao(cdp.createDataSource());
-        dao.deleteAll();
+        //dao.deleteAll();
         ConferenceTalk talk1 = new ConferenceTalk("ABC", "123", "A1");
         ConferenceTalk talk2 = new ConferenceTalk("ABCD", "1234", "A2");
         ConferenceTalk talk3 = new ConferenceTalk("ABCDE", "12345", "A3");

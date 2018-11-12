@@ -70,6 +70,18 @@ public class HttpServerTest {
     }
 
     @Test
+    public void shouldDeleteData() throws IOException {
+        HttpRequest request = new HttpRequest("localhost", server.getPort(),
+                "/api/talks/1?status=200");
+        request.setMethod("DELETE");
+        HttpResponse response = request.execute();
+        HttpPath path = new HttpPath("/api/talks/1?status=200");
+        assertThat(path.getPath()).isEqualTo("/api/talks/1");
+        //assertThat(path.getPathParts()).containsExactly("api", "talks");
+        assertThat(path.getParameter("status")).hasValue("200");
+    }
+
+    @Test
     public void test() throws IOException {
         HttpRequest request = new HttpRequest("localhost", server.getPort(), "/api/talks/1?status=200");
         HttpResponse response = request.execute();
