@@ -96,12 +96,10 @@ public class ConferenceDatabaseProgram {
             }
         } else if (command.toLowerCase().equals("delete")) {
             if (args.length >= 2) {
-                path = args[1];
-                int slashPos = path.indexOf("/", path.indexOf("/") + 2);
-                int pathNum = Integer.parseInt(path.substring(slashPos).substring(slashPos + 3));
-                dao.deleteTalk(pathNum);
+                title = args[1];
+                dao.deleteTalk(title);
             } else {
-                System.out.println("Please specify which Talk you want to delete.");
+                System.out.println("Please specify which Talk you want to delete. (Delete + Title)");
             }
         } else
 

@@ -81,13 +81,12 @@ public class ConferenceCommandLineClient {
      * @return value if found or default value if not
      */
     private String getArgument(String identifier, String[] strings, String defaultValue) {
-        // not bothering to check the last one, as there is no space for value anyways
         for (int i = 0; i < strings.length - 1; i++) {
             Pattern pattern = Pattern.compile(strings[i]);
             Matcher matcher = pattern.matcher(identifier);
             if(matcher.matches()) {
                 String value = strings[i + 1];
-                i++; // next one is already used as value, and no point in checking
+                i++;
                 return value;
             }
         }

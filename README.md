@@ -1,3 +1,26 @@
+Thomas B. Bjerke og Vegard Gallefoss
+boltho17 -- galveg17
+
+--hvordan teste funksjonalitet
+mvn package
+- java -jar target/database-exercise-0.0.1-SNAPSHOT.jar no.kristiania.pgr200.database.InnleveringMain
+-java -jar target/database-exercise-0.0.1-SNAPSHOT.jar insert Mittforedrag "description"         //for å legge til et foredrag
+-java -jar target/database-exercise-0.0.1-SNAPSHOT.jar list				 	   //for å skrive ut alle foredrag
+-java -jar target/database-exercise-0.0.1-SNAPSHOT.jar delete MittForedrag 	                //for å slette et foredrag
+
+--hvordan jobbet vi sammen?
+Da vi jobbet med prosjektet satt vi alltid på skolen side om side så vi kunne jobbe så effektivt som mulig, samtidig kunne vi hjelpe hverandre hver gang en av oss satt fast eller trengte hjelp. Sammarbeid i slike prosjekter vil alltid være en fordel og vi var glad for at vi slapp å gjøre dette alene, spesielt med tanke på at vi måtte jobbe med andre eksamener samtidig. 
+
+--evaluering
+Det var mye frustrasjon og motgang i dette prosjektet, men vi føler at vi kom oss godt gjennom det. Vi fikk ikke godkjent på arbeidskrav 2, men vi har nå fått til å lese fra .properties-fil og vi har fått flyway-migrations til å funke. 
+Det vanskeligste med oppgaven var å få til kommunikasjon mellom  klienten og http-serveren og det var det vi brukte mest tid på. Vi brukte et eget github-repository underveis i prosjektet fordi vi hadde noe problemer med å få prosjektet vårt over til github classrooms, men vi fikk ordna det til slutt så da fikk vi lagt over prosjektet til det riktige repository. Vi syntes det var et krevende prosjekt som fikk testet oss godt og vi er glad vi kom oss gjennom det. 
+
+--parprogrammering video
+
+
+###########################################################################
+
+
 # PGR200 Hovedinnlevering
 
 Innleveringsfrist: 12. november kl 09:00. **Viktig:** WiseFlow *stenger* når fristen er ute - lever i tide.

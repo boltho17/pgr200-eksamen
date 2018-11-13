@@ -54,6 +54,21 @@ public class ConferenceTalksDaoTest {
     }
 
     @Test
+    public void shouldDeleteTalk() throws SQLException {
+        ConferenceDatabaseProgram cdp = new ConferenceDatabaseProgram();
+        ConferenceTalkDao dao = new ConferenceTalkDao(cdp.createDataSource());
+        ConferenceTalk talk = new ConferenceTalk("Delete", "This", "Thank you!");
+        dao.insertTalk(talk);
+        dao.deleteTalk("Delete");
+        List<ConferenceTalk> talks = dao.listAll();
+        assertThat(talks)
+                .noneMatch(p -> p.getTitle().isEmpty())
+                .extracting(p -> p.toString())
+                .doesNotContain("Delete");
+
+    }
+
+    @Test
     public void shouldDeleteAllTalks() throws SQLException {
         ConferenceDatabaseProgram cdp = new ConferenceDatabaseProgram();
         ConferenceTalkDao dao = new ConferenceTalkDao(cdp.createDataSource());
@@ -65,9 +80,6 @@ public class ConferenceTalksDaoTest {
                 .isEmpty();
 
     }
-
-
-
 }
 
 

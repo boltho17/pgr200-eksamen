@@ -122,11 +122,11 @@ public class ConferenceTalkDao {
         }
     }
 
-    //Sletter en talk basert på id. Gir beskjed hvis en talk med den gitte tittelen ikke eksisterer.
-    public void deleteTalk(int id) throws SQLException {
+    //Sletter en talk basert på title. Gir beskjed hvis en talk med den gitte tittelen ikke eksisterer.
+    public void deleteTalk(String title) throws SQLException {
         try (Connection conn = dataSource.getConnection()) {
-            try (PreparedStatement ps = conn.prepareStatement("select count(*) from CONFERENCE_TALK where id = ?")) {
-                ps.setInt(1, id);
+            try (PreparedStatement ps = conn.prepareStatement("select count(*) from CONFERENCE_TALK where title = ?")) {
+                ps.setString(1, title);
 
                 ResultSet rs = ps.executeQuery();
                 int n;
@@ -135,14 +135,14 @@ public class ConferenceTalkDao {
                     System.out.println(n);
 
                     if (n > 0) {
-                        String sql = "delete from CONFERENCE_TALK where id = ?";
+                        String sql = "delete from CONFERENCE_TALK where title = ?";
                         try (PreparedStatement statement = conn.prepareStatement(sql)) {
-                            statement.setInt(1, id);
+                            statement.setString(1, title);
 
                             statement.executeUpdate();
-                            System.out.println("Job done! Talk #" + id + " has been deleted.\n");
+                            System.out.println("Job done! The talk " + title + " has been deleted.\n");
                         }
-                    } else System.out.println("No talk with the id #" + id + " exists.\n");
+                    } else System.out.println("No talk with the title " + title + " exists.\n");
                 }
             }
         }

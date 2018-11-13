@@ -11,11 +11,7 @@ public class HttpGetRequest extends HttpRequest {
 
     public HttpGetRequest(String hostname, int port, String requestTarget) throws IOException {
         super(hostname, port, requestTarget);
-        print();
     }
 
-    public void print() throws IOException {
-        String test = conferenceCommandLineClient.decodeCommand(new String[]{"add"}).getTitle();
-        System.out.println(test + "!!!!!!!!!!");
-    }
+
 }
